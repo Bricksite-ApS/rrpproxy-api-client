@@ -1,0 +1,22 @@
+{
+    "name": "bricksitedevelopment/rrpproxy-api-client",
+    "type": "library",
+    "description": "RRPProxy Rest API Client",
+    "keywords": [],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rasmus Kjeldsen",
+            "email": "rasmus@bricksite.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bricksite\\RRPProxy\\": "src/"
+        }
+    }
+}
