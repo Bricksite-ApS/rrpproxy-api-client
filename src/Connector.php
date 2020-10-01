@@ -81,7 +81,7 @@ class Connector
             sleep(5);
             return $this->request($command, $args);
         } else { // Permanent Error Codes (5xx), throw exception.
-            throw new \Exception($result['description']);
+            throw new \Exception($result['code'] . ' : ' . $result['description']);
         }
     }
 
