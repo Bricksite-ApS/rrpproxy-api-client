@@ -51,7 +51,6 @@ class Connector
 
     public function setTestMode(bool $enable)
     {
-        $this->apiUrl = $enable ? 'https://api-ote.rrpproxy.net/api/call' : 'https://api.rrpproxy.net/api/call';
         $this->test = $enable;
     }
 
@@ -99,7 +98,7 @@ class Connector
         }, $args));
         
         // Build url with get parameters
-        $url = $this->apiUrl . ($this->test ? 'https://api-ote.rrpproxy.net/api/call?s_opmode=OTE&' : 'https://api.rrpproxy.net/api/call?') . http_build_query($requestArgs);
+        $url = ($this->test ? 'https://api-ote.rrpproxy.net/api/call?s_opmode=OTE&' : 'https://api.rrpproxy.net/api/call?') . http_build_query($requestArgs);
 
         // Send request
         $ch = curl_init($url);
