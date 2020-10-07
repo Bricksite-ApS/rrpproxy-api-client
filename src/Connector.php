@@ -60,10 +60,10 @@ class Connector
         if (function_exists('idn_to_ascii')) {
             // IDN Conversion
             if (in_array($command, $this->domainIDNCommands)) {
-                $idn = idn_to_ascii($args['domain']);
+                $idn = idn_to_ascii($args['domain'], IDNA_DEFAULT, INTL_IDNA_VARIANT_UTS46);
                 $args['domain'] = $idn ? $idn : $args['domain'];
             } elseif (in_array($command, $this->dnsIDNCommands)) {
-                $idn = idn_to_ascii($args['dnszone']);
+                $idn = idn_to_ascii($args['dnszone'], IDNA_DEFAULT, INTL_IDNA_VARIANT_UTS46);
                 $args['dnszone'] = $idn ? $idn : $args['dnszone'];
             }
         }
