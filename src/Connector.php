@@ -92,9 +92,9 @@ class Connector
         $requestArgs = array_merge([
             's_login' => rawurlencode($this->username),
             's_pw' => rawurlencode($this->password),
-            'command' => rawurldecode($command)
+            'command' => rawurlencode($command)
         ], array_map(function ($data) {
-            return rawurlencode($data);
+            return $data;
         }, $args));
         
         // Build url with get parameters
