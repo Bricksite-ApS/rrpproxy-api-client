@@ -6,13 +6,15 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Rasmus Kjeldsen",
-            "email": "rasmus@bricksite.com",
+            "name": "Bricksite",
+            "email": "development@bricksite.com",
             "role": "Developer"
         }
     ],
     "require": {
-        "php": "^7.0"
+        "php": "^8.0",
+        "ext-intl": "*",
+        "ext-curl": "*"
     },
     "autoload": {
         "psr-4": {
