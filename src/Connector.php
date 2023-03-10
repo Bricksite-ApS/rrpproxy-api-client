@@ -4,8 +4,10 @@ namespace Bricksite\RRPProxy;
 
 class Connector
 {
-    public $username, $password, $apiUrl, $test = false;
-    protected $retry = false;
+    protected string $username;
+    protected string $password;
+    protected bool $test = false;
+    protected bool $retry = false;
 
     /**
      * All domain related commands which should convert domain names to idn
@@ -34,22 +36,23 @@ class Connector
 
     public function __construct(string $username = '', string $password = '', bool $test = false)
     {
-        if ($username) $this->setUsername($username);
-        if ($password) $this->setPassword($password);
-        if ($test) $this->setTestMode($test);
+        $this->username = $username;
+        $this->password = $password;
+        $this->test = $test;
     }
 
-    public function setUsername(string $username)
+    //TODO: maybe remove setters since these values should be set once when constructing
+    public function setUsername(string $username): void
     {
         $this->username = $username;
     }
 
-    public function setPassword(string $password)
+    public function setPassword(string $password): void
     {
         $this->password = $password;
     }
 
-    public function setTestMode(bool $enable)
+    public function setTestMode(bool $enable): void
     {
         $this->test = $enable;
     }
@@ -59,10 +62,10 @@ class Connector
         if (function_exists('idn_to_ascii')) {
             // IDN Conversion
             if (in_array($command, $this->domainIDNCommands)) {
-                $idn = idn_to_ascii($args['domain'], IDNA_DEFAULT, INTL_IDNA_VARIANT_UTS46);
+                $idn = idn_to_ascii($args['domain'], IDNA_DEFAULT);
                 $args['domain'] = $idn ? $idn : $args['domain'];
             } elseif (in_array($command, $this->dnsIDNCommands)) {
-                $idn = idn_to_ascii($args['dnszone'], IDNA_DEFAULT, INTL_IDNA_VARIANT_UTS46);
+                $idn = idn_to_ascii($args['dnszone'], IDNA_DEFAULT);
                 $args['dnszone'] = $idn ? $idn : $args['dnszone'];
             }
         }
@@ -96,7 +99,7 @@ class Connector
         ], array_map(function ($data) {
             return $data;
         }, $args));
-        
+
         // Build url with get parameters
         $url = ($this->test ? 'https://api-ote.rrpproxy.net/api/call?s_opmode=OTE&' : 'https://api.rrpproxy.net/api/call?') . http_build_query($requestArgs);
 
