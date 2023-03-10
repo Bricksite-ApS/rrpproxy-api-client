@@ -43,22 +43,6 @@ class Connector
         $this->test = $test;
     }
 
-    //TODO: maybe remove setters since these values should be set once when constructing
-    public function setUsername(string $username): void
-    {
-        $this->username = $username;
-    }
-
-    public function setPassword(string $password): void
-    {
-        $this->password = $password;
-    }
-
-    public function setTestMode(bool $enable): void
-    {
-        $this->test = $enable;
-    }
-
     public function formatDomainArg(string $command, array $args = []): array
     {
         if (function_exists('idn_to_ascii')) {
