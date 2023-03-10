@@ -2,6 +2,8 @@
 
 namespace Bricksite\RRPProxy;
 
+use Exception;
+
 class Connector
 {
     protected string $username;
@@ -14,16 +16,16 @@ class Connector
      *
      * @var array
      */
-    public $domainIDNCommands = ['AddDomain', 'ModifyDomain', 'RenewDomain', 'TransferDomain', 'StatusDomain', 'DeleteDomain', 'PushDomain'];
+    public array $domainIDNCommands = ['AddDomain', 'ModifyDomain', 'RenewDomain', 'TransferDomain', 'StatusDomain', 'DeleteDomain', 'PushDomain'];
 
     /**
      * All dns related commands which should convert domain names to idn
      *
      * @var array
      */
-    public $dnsIDNCommands = ['AddDNSZone', 'ModifyDNSZone', 'QueryDNSZoneRRList'];
+    public array $dnsIDNCommands = ['AddDNSZone', 'ModifyDNSZone', 'QueryDNSZoneRRList'];
 
-    public $curlOpts = [
+    public array $curlOpts = [
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_TIMEOUT => 20,
         CURLOPT_HEADER => false,
@@ -34,7 +36,7 @@ class Connector
         ]
     ];
 
-    public function __construct(string $username = '', string $password = '', bool $test = false)
+    public function __construct(string $username, string $password, bool $test = false)
     {
         $this->username = $username;
         $this->password = $password;
@@ -57,22 +59,29 @@ class Connector
         $this->test = $enable;
     }
 
-    public function formatDomainArg(string $command, array $args = [])
+    public function formatDomainArg(string $command, array $args = []): array
     {
         if (function_exists('idn_to_ascii')) {
             // IDN Conversion
             if (in_array($command, $this->domainIDNCommands)) {
                 $idn = idn_to_ascii($args['domain'], IDNA_DEFAULT);
-                $args['domain'] = $idn ? $idn : $args['domain'];
+                $args['domain'] = $idn ?: $args['domain'];
             } elseif (in_array($command, $this->dnsIDNCommands)) {
                 $idn = idn_to_ascii($args['dnszone'], IDNA_DEFAULT);
-                $args['dnszone'] = $idn ? $idn : $args['dnszone'];
+                $args['dnszone'] = $idn ?: $args['dnszone'];
             }
         }
 
         return $args;
     }
 
+    /**
+     * @param $result
+     * @param string $command
+     * @param array $args
+     * @return mixed
+     * @throws Exception
+     */
     public function validateResult($result, string $command, array $args = [])
     {
         if ((preg_match('/^2/', $result['code']))) { // Successful Return Codes (2xx), return the results.
@@ -83,7 +92,7 @@ class Connector
             sleep(5);
             return $this->request($command, $args);
         } else { // Permanent Error Codes (5xx), throw exception.
-            throw new \Exception($result['code'] . ' : ' . $result['description']);
+            throw new Exception($result['code'] . ' : ' . $result['description']);
         }
     }
 
@@ -119,7 +128,7 @@ class Connector
 
         if (curl_error($ch)) {
             curl_close($ch);
-            throw new \Exception('Curl Error(' . curl_errno($ch) . '): ' . curl_error($ch));
+            throw new Exception('Curl Error(' . curl_errno($ch) . '): ' . curl_error($ch));
         }
         curl_close($ch);
 
@@ -135,7 +144,7 @@ class Connector
         }
 
         if (empty($response)) {
-            throw new \Exception('Empty response from API');
+            throw new Exception('Empty response from API');
         }
 
         $hash = array("property" => array());

@@ -4,9 +4,9 @@ namespace Bricksite\RRPProxy;
 
 class RRPClient
 {
-    public $connector;
+    public Connector $connector;
 
-    public function __construct(string $username = null, string $password = null, bool $test = false) {
+    public function __construct(string $username, string $password, bool $test = false) {
         $this->connector = new Connector($username, $password, $test);
     }
 
