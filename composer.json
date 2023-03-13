@@ -3,6 +3,7 @@
     "type": "library",
     "description": "RRPProxy Rest API Client",
     "keywords": [],
+    "version": "1.1",
     "license": "MIT",
     "authors": [
         {
