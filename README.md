@@ -1,10 +1,10 @@
-# CentralNic http api client 
+# CentralNic(previously named Rrpproxy) http api client 
 Minimal api client for CentralNic http api
 
 [CentralNic documentation](https://kb.centralnicreseller.com/api/api-commands/api-command-reference)
 
 ## Install
-`composer require bricksitedevelopment/centralnic-api-client`
+`composer require bricksitedevelopment/rrpproxy-api-client`
 
 ## Example usage
 ### Check availability of a single domain: [CheckDomain](https://kb.centralnicreseller.com/api/api-command/CheckDomain)
