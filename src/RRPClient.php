@@ -16,14 +16,14 @@ class RRPClient
      *
      * @var array
      */
-    public array $domainIDNCommands = ['AddDomain', 'ModifyDomain', 'RenewDomain', 'TransferDomain', 'StatusDomain', 'DeleteDomain', 'PushDomain'];
+    private array $domainIDNCommands = ['AddDomain', 'ModifyDomain', 'RenewDomain', 'TransferDomain', 'StatusDomain', 'DeleteDomain', 'PushDomain'];
 
     /**
      * All dns related commands which should convert domain names to idn
      *
      * @var array
      */
-    public array $dnsIDNCommands = ['AddDNSZone', 'ModifyDNSZone', 'QueryDNSZoneRRList'];
+    private array $dnsIDNCommands = ['AddDNSZone', 'ModifyDNSZone', 'QueryDNSZoneRRList'];
 
     public function __construct(string $username, string $password, bool $test = false)
     {
