@@ -2,9 +2,9 @@
 
 require_once(dirname(__DIR__) . '/vendor/autoload.php');
 
-use Bricksite\RRPProxy\RRPClient;
+use Bricksite\CentralNic\CentralNicClient;
 
-$rrp = new RRPClient('USERNAME', 'PASSWORD', false);
+$rrp = new CentralNicClient('USERNAME', 'PASSWORD', false);
 
 $result = $rrp->request('CheckDomain', ['domain' => 'domain.com']);
 

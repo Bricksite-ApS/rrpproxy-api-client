@@ -1,10 +1,10 @@
 <?php
 
-namespace Bricksite\RRPProxy;
+namespace Bricksite\CentralNic;
 
 use Exception;
 
-class RRPClient
+class CentralNicClient
 {
     protected string $username;
     protected string $password;
