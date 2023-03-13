@@ -133,7 +133,7 @@ class Connector
             throw new Exception('Empty response from API');
         }
 
-        $hash = array("property" => array());
+        $hash = ["property" => []];
         $responseList = explode("\n", $response);
         foreach ($responseList as $item) {
             if (preg_match("/^([^\\=]*[^\t\\= ])[\t ]*=[\t ]*(.*)\$/", $item, $m)) {
@@ -145,7 +145,7 @@ class Connector
                     if (in_array($prop, array_keys($hash["property"]))) {
                         $hash["property"][$prop][] = $value;
                     } else {
-                        $hash["property"][$prop] = array($value);
+                        $hash["property"][$prop] = [$value];
                     }
                 } else {
                     $hash[$attr] = $value;
